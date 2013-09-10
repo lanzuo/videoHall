@@ -78,6 +78,7 @@
 		2199CB5317A7A8DF00A47769 /* ASINetworkQueue.h in Sources */ = {isa = PBXBuildFile; fileRef = 216B127A178FDFB000087552 /* ASINetworkQueue.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2199CB5417A7A8DF00A47769 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 216B127B178FDFB000087552 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		2199CB5517A7A8DF00A47769 /* ASIProgressDelegate.h in Sources */ = {isa = PBXBuildFile; fileRef = 216B127C178FDFB000087552 /* ASIProgressDelegate.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		219A271D17DF17EC00B38312 /* UIViewCtrlLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 219A271C17DF17EC00B38312 /* UIViewCtrlLoading.m */; };
 		219C3A4A179FBE8D00C666D1 /* RootViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 219C3A49179FBE8D00C666D1 /* RootViewCtrl.m */; };
 		21CE18C717D5BC1E00884A05 /* SliderImageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 21CE18C617D5BC1E00884A05 /* SliderImageItem.m */; };
 		21D0253817AB5DE400B3A6E7 /* applicationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D0253717AB5DE400B3A6E7 /* applicationView.m */; };
@@ -147,10 +148,6 @@
 		215F5914178BEE2300407E16 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		215F5916178BEE2300407E16 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		215F591E178BEE2300407E16 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		215F5926178BEE2300407E16 /* XH_VideoHallTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XH_VideoHallTests-Info.plist"; sourceTree = "<group>"; };
-		215F5928178BEE2300407E16 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		215F592A178BEE2300407E16 /* XH_VideoHallTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XH_VideoHallTests.h; sourceTree = "<group>"; };
-		215F592B178BEE2300407E16 /* XH_VideoHallTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XH_VideoHallTests.m; sourceTree = "<group>"; };
 		2164D2C91790E805005265D0 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		2164D2CA1790E805005265D0 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		2164D2CC1790EB6A005265D0 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
@@ -240,6 +237,8 @@
 		2189EAFF17AA729C00F1CD1B /* icon_disney.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_disney.png; sourceTree = "<group>"; };
 		2189EB0017AA729C00F1CD1B /* icon_nba.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_nba.png; sourceTree = "<group>"; };
 		2189EB3E17AA7AC100F1CD1B /* bg_textField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_textField.png; sourceTree = "<group>"; };
+		219A271B17DF17E400B38312 /* UIViewCtrlLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewCtrlLoading.h; sourceTree = "<group>"; };
+		219A271C17DF17EC00B38312 /* UIViewCtrlLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewCtrlLoading.m; sourceTree = "<group>"; };
 		219C3A48179FBE8000C666D1 /* RootViewCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewCtrl.h; sourceTree = "<group>"; };
 		219C3A49179FBE8D00C666D1 /* RootViewCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewCtrl.m; sourceTree = "<group>"; };
 		21CE18C517D5BC1300884A05 /* SliderImageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderImageItem.h; sourceTree = "<group>"; };
@@ -389,7 +388,6 @@
 				2110AE6417D4771B006801FF /* Default@2x.png */,
 				2110AE6217D476F8006801FF /* Default.png */,
 				215F5906178BEE2300407E16 /* XH_VideoHall */,
-				215F5924178BEE2300407E16 /* XH_VideoHallTests */,
 				215F58FF178BEE2300407E16 /* Frameworks */,
 				215F58FE178BEE2300407E16 /* Products */,
 			);
@@ -451,25 +449,6 @@
 				215F5912178BEE2300407E16 /* Default.png */,
 				215F5914178BEE2300407E16 /* Default@2x.png */,
 				215F5916178BEE2300407E16 /* Default-568h@2x.png */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		215F5924178BEE2300407E16 /* XH_VideoHallTests */ = {
-			isa = PBXGroup;
-			children = (
-				215F592A178BEE2300407E16 /* XH_VideoHallTests.h */,
-				215F592B178BEE2300407E16 /* XH_VideoHallTests.m */,
-				215F5925178BEE2300407E16 /* Supporting Files */,
-			);
-			path = XH_VideoHallTests;
-			sourceTree = "<group>";
-		};
-		215F5925178BEE2300407E16 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				215F5926178BEE2300407E16 /* XH_VideoHallTests-Info.plist */,
-				215F5927178BEE2300407E16 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -607,6 +586,8 @@
 			isa = PBXGroup;
 			children = (
 				21E01230178E54E40030337C /* UIDetailViewCtrl.h */,
+				219A271B17DF17E400B38312 /* UIViewCtrlLoading.h */,
+				219A271C17DF17EC00B38312 /* UIViewCtrlLoading.m */,
 				21E01231178E54EC0030337C /* UIDetailViewCtrl.m */,
 			);
 			name = DetailViewCtrl;
@@ -804,6 +785,7 @@
 				2167E90617C1E985005E11F4 /* UIBoxTableViewCell.m in Sources */,
 				21CE18C717D5BC1E00884A05 /* SliderImageItem.m in Sources */,
 				21F4405C17D843FA00B15D34 /* UISearchViewCtrl.m in Sources */,
+				219A271D17DF17EC00B38312 /* UIViewCtrlLoading.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -814,14 +796,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				215F590A178BEE2300407E16 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		215F5927178BEE2300407E16 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				215F5928178BEE2300407E16 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

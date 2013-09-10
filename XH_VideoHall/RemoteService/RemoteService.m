@@ -39,8 +39,16 @@ static RemoteService * sharedInstance = nil;
         
     UDPPort = _UDPPort_;
     TCPPort = _TCPPort_;
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    RemoteBoxIP = [prefs objectForKey:@"LastBoxIP"];
+    if ([RemoteBoxIP intValue] == 0) {
+        RemoteBoxIP = @"...";
+    }
     UDPSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self
                                               delegateQueue:dispatch_get_main_queue()];
+    
+    
     
 	NSError * error = nil;	
 	if (![UDPSocket bindToPort:0 error:&error])
@@ -115,7 +123,7 @@ static RemoteService * sharedInstance = nil;
  */
 -(void) connectWithTCP {
     
-    if (Status == unconnected) {
+    if (Status != connected) {
         if ([RemoteBoxIP intValue] == 0) { //如果IP为空
             //Status = unconnected;
             [self scanWithUDP];
@@ -341,8 +349,15 @@ static RemoteService * sharedInstance = nil;
     [self tcpSendCmd:sendByte cmdLength:4];
 }
 
+/*
+ 描述 : 发送播放指令，响应UIDetailView的播放按钮事件
+ 输入 : 节目的Uri
+ 输出 : 无
+ */
 -(void) sendPlayValue:(NSString * )playUri {
+    NSLog(@"%s,%d",__FUNCTION__,__LINE__);
     NSString * epiUri = [NSString stringWithFormat:@"URI=%@%@",playUri,@"|1:play"] ;
+    
     NSData * playData = [epiUri dataUsingEncoding: NSUTF8StringEncoding];
     Byte sendByte[[playData length]+6];
     sendByte[4] = (Byte)8;
@@ -350,6 +365,9 @@ static RemoteService * sharedInstance = nil;
     memcpy(&sendByte[6],[playData bytes],[playData length]);
     [self tcpSendCmd:sendByte cmdLength:[playData length]+2];
 }
+
+
+
 
 /*
  描述 : 修改绑定的盒子的IP地址，当通过设置手动更新／重新扫描更改盒子后，需要通知settingView更新UITextField的值
@@ -362,7 +380,7 @@ static RemoteService * sharedInstance = nil;
     [prefs setObject:ip forKey:@"LastBoxIP"];
     [prefs synchronize];
     if (should) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"boxDeviceIPOnChange" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"boxDeviceIPOnChange" object:ip];
     }
 }
 

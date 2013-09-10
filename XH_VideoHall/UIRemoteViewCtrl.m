@@ -4,6 +4,7 @@
 
 @implementation UIRemoteViewCtrl
 
+@synthesize playUrl = PlayUrl;
  
 -(void)loadView{
     
@@ -164,62 +165,63 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    
     [super viewWillAppear:animated];
     rs = [RemoteService sharedInstance];
-    [rs connectWithTCP];
-    /*if (![VHAppDelegate App].appRS) {
-        [VHAppDelegate App].appRS = [[RemoteService alloc]init];
-    }
-    [[VHAppDelegate App].appRS connectWithTCP];
-     */
-    NSString * statusDes= @"";
-    switch (rs.status) {
-        case scanning:
-            statusDes = @"扫描中...";
-            
-            [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                            name:@"ifScanOneBox"
-                                                          object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(ifScanOneBoxHandle:)
-                                                         name:@"ifScanOneBox" object:nil];
-            [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                            name:@"scanBoxCompletion"
-                                                          object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(scanBoxCompletionHandle:)
-                                                         name:@"scanBoxCompletion"
-                                                       object:nil];
-            
-            boxView = [[UIBoxTableView alloc]initWithFrame:CGRectMake(50, 200, 220, 300)];
-            boxView.delegate = self;
-            [remoteCtrlWrapper addSubview:boxView];
-            
-            break;
-            
-        case connecting:
-            statusDes = @"连接中...";
-            
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getTcpState" object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTcpStateHandle:) name:@"getTcpState" object:nil];
-            
-        default:
-            break;
-    }
+    NSLog(@"status : %d",rs.status);
+    if (rs.status != connected) {
+        [rs connectWithTCP];
+        NSString * statusDes= @"";
+        switch (rs.status) {
+            case scanning:
+                statusDes = @"扫描中...";
+                
+                [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                                name:@"ifScanOneBox"
+                                                              object:nil];
+                [[NSNotificationCenter defaultCenter] addObserver:self
+                                                         selector:@selector(ifScanOneBoxHandle:)
+                                                             name:@"ifScanOneBox" object:nil];
+                [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                                name:@"scanBoxCompletion"
+                                                              object:nil];
+                [[NSNotificationCenter defaultCenter] addObserver:self
+                                                         selector:@selector(scanBoxCompletionHandle:)
+                                                             name:@"scanBoxCompletion"
+                                                           object:nil];
+                
+                boxView = [[UIBoxTableView alloc]initWithFrame:CGRectMake(50, 200, 220, 300)];
+                boxView.delegate = self;
+                [remoteCtrlWrapper addSubview:boxView];
+                
+                break;
+                
+            case connecting:
+                statusDes = @"连接中...";
+                
+                [[NSNotificationCenter defaultCenter] removeObserver:self name:@"getTcpState" object:nil];
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getTcpStateHandle:) name:@"getTcpState" object:nil];
+                
+            default:
+                break;
+        }
+        
+        
+        {
+            waitLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 163, 320, 75)];
+            waitLabel.backgroundColor = [UIColor clearColor];
+            waitLabel.text = statusDes;
+            waitLabel.font = [UIFont fontWithName:@"FZLTCXHJW--GB1-0" size:14];
+            waitLabel.textColor = [UIColor whiteColor];
+            waitLabel.textAlignment = UITextAlignmentCenter;
+            [remoteCtrlWrapper addSubview:waitLabel];
+            waitIdv = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(150, 150, 20, 20)];
+            [remoteCtrlWrapper addSubview:waitIdv];
+            [waitIdv startAnimating];
+        }
+    }//(rs.status == unconnected) end
     
     
-    {
-        waitLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 163, 320, 75)];
-        waitLabel.backgroundColor = [UIColor clearColor];
-        waitLabel.text = statusDes;
-        waitLabel.font = [UIFont fontWithName:@"FZLTCXHJW--GB1-0" size:14];
-        waitLabel.textColor = [UIColor whiteColor];
-        waitLabel.textAlignment = UITextAlignmentCenter;
-        [remoteCtrlWrapper addSubview:waitLabel];
-        waitIdv = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(150, 150, 20, 20)];
-        [remoteCtrlWrapper addSubview:waitIdv];
-        [waitIdv startAnimating];
-    }
 
 
 }
@@ -322,6 +324,9 @@ description :
     NSString * tcpStateDes = @"";
     if (rs.status == connected) {
         tcpStateDes = @"连接成功";
+        if (![self.playUrl isEqualToString:@""]) {
+            [rs sendPlayValue:self.playUrl];
+        }
     }
     if (rs.status == unconnected) {
         tcpStateDes = @"连接失败，请检查网络";
@@ -543,5 +548,7 @@ description :
     }
     return YES;
 }
+
+
 
 @end

@@ -307,6 +307,7 @@ static int sliderIndex = 0;
  输出 : 无
  */
 -(void)btnRemoteCtrlClick {
+    [self.view addSubview:ctrlLoading];
     UIRemoteViewCtrl * remoteViewCtrl = [[UIRemoteViewCtrl alloc]init];
     [self.navigationController pushViewController:remoteViewCtrl animated:YES];
 }
@@ -358,10 +359,13 @@ static int sliderIndex = 0;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
+    ctrlLoading = [[UIViewCtrlLoading alloc]initWithFrame:CGRectMake(120, 200, 80, 80)];
+    [self.view addSubview:ctrlLoading];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [ctrlLoading removeFromSuperview];
 }
 
 -(void)viewDidAppear:(BOOL)animated{

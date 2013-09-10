@@ -59,7 +59,8 @@
         remoteIcon.image = [UIImage imageNamed:@"icon_remote.png"];
         [mainContent addSubview:remoteIcon];
         
-        NSArray * ipAddress = [[NSArray alloc]initWithObjects:@"192",@"168",@"1",@"1", nil];
+        NSArray * ipAddress = [[NSArray alloc]init];
+        
         RemoteService * rs = [RemoteService sharedInstance];
         if (![rs.remoteBoxIP isEqual: @""]) {
             ipAddress = [rs.remoteBoxIP componentsSeparatedByString:@"."];
@@ -137,7 +138,7 @@
                                                     name:@"boxDeviceIPOnChange"
                                                   object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateUITextFieldValue)
+                                             selector:@selector(updateUITextFieldValue:)
                                                  name:@"boxDeviceIPOnChange"
                                                object:nil];
 
@@ -202,15 +203,16 @@
 
 /*
  描述 : 实现Notification boxDeviceIPOnChange 的事件
- 输入 :
+ 输入 : NSNotification对象
  输出 : 无
  */
--(void)updateUITextFieldValue {
+-(void)updateUITextFieldValue:(NSNotification*) notification {
 
     NSArray * ipAddress = [[NSArray alloc]init];
-    RemoteService * rs = [RemoteService sharedInstance];
-    if (![rs.remoteBoxIP isEqual: @""]) {
-        ipAddress = [rs.remoteBoxIP componentsSeparatedByString:@"."];
+    NSString * ip = [notification object];
+    
+    if (![ip isEqual: @""]) {
+        ipAddress = [ip componentsSeparatedByString:@"."];
     }
     int i = 0;
     for (UITextField * currentTextField in UITextFieldArray) {

@@ -16,3 +16,11 @@ TODO-List :
       2 、搜索界面完成布局，接口没有调通
       3 、输入IP地址后，点击导航栏菜单按钮隐藏settingview时也保存IP地址
       4 、解决：扫描到IP地址并连上后，虽然保存了下来，但没有更新settingview UITextField的值
+      
+日期：20130909
+完成：
+      1 、使用单体将remoteService实例化
+      2 、remoteBoxIP和remoteBoxPort的读写都放在remoteService里，不再放在VHAppDelegate里
+      3 、remoteService增加sendPlayValue方法供UIDetailView调用
+      4 、枚举remoteService的状态
+      

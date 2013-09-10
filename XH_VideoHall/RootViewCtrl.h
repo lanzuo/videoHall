@@ -5,6 +5,7 @@
 #import "ASIHTTPRequest.h"
 #import "ASINetworkQueue.h"
 #import "SettingView.h"
+#import "UIViewCtrlLoading.h"
 
 
 @interface RootViewCtrl : UIViewController<UITextFieldDelegate,
@@ -21,6 +22,7 @@
     NSMutableArray       * sliderImgArr;        //跑马灯图片数组
     ASIHTTPRequest       * asiRequest;
     ASINetworkQueue      * asiQueue;
+    UIViewCtrlLoading    * ctrlLoading;
   
 }
 

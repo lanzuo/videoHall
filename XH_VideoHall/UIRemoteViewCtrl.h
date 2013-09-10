@@ -118,9 +118,10 @@
     UILabel                      * waitLabel ;
     UIActivityIndicatorView      * waitIdv;
     UIBoxTableView               * boxView;
-    
-
+    NSString                     * PlayUrl;
     
 }
+
+@property(nonatomic,retain) NSString * playUrl;
 
 @end

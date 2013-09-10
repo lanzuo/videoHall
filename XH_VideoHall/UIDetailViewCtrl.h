@@ -1,18 +1,17 @@
 #import <UIKit/UIKit.h>
 #import "RemoteService.h"
+#import "UIViewCtrlLoading.h"
 
 
 @interface UIDetailViewCtrl : UIViewController{
 
-    UIImageView * _video_post;
+    UIImageView             * VideoPost;
+    UILabel                 * VideoTitle;
+    UILabel                 * VideoMeta;    
+    UIButton                * VideoBtnPlay;
+    UIActivityIndicatorView * Indic;
+    UIViewCtrlLoading       * CtrlLoading;
     
-    UILabel * _video_title;
-    
-    UILabel * _video_meta;
-    
-    UIButton * _video_btn_play;
-    
-    UIActivityIndicatorView * _indic;
     
     //AsyncSocket * tcpSocket;
 
