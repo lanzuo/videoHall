@@ -1,21 +1,49 @@
-//
-//  VHAppDelegate.m
-//  XH_VideoHall
-//
-//  Created by wangdan on 13-7-9.
-//  Copyright (c) 2013年 wangdan. All rights reserved.
-//
 
 #import "VHAppDelegate.h"
+#import "RootViewCtrl.h"
 
 @implementation VHAppDelegate
+
+@synthesize window;
+
+@synthesize serviceConfig = ServiceConfig;
+
++(VHAppDelegate *)App
+{
+    return  (VHAppDelegate *)[[UIApplication sharedApplication]delegate];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+    [application setStatusBarHidden:YES];
+
+    ServiceConfig = [[NSDictionary alloc]initWithObjectsAndKeys:
+    @"http://tvepg.bbtv.cn/tv/OttService/QueryPosition?Code=POSITION_BESTV_ONLINE_1",  @"ConfigVideoListAddress",
+                                @"http://tvepg.bbtv.cn/tv/OttService/SearchPrograms",  @"ConfigSearchPostAddress",
+                                                             @"http://tvpic.bbtv.cn",  @"ConfigImgAddress",
+                                   @"http://tvepg.bbtv.cn/tv/OttService/QueryDetail",  @"ConfigVideoDetailAddress",
+                                                                                       nil];
+    
+    //checkNetWork
+    NSURL * url = [NSURL URLWithString:@"http://www.baidu.com"];
+    NSURLRequest * request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:10];
+    NSHTTPURLResponse * response;
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    
+    if (response == nil) {
+        NSLog(@"没有网络");
+    }else{
+        NSLog(@"网络正常");
+        RootViewCtrl  * RootVCtrl = [[RootViewCtrl alloc]init];
+        UINavigationController * navCtrl = [[UINavigationController alloc]initWithRootViewController:RootVCtrl];
+        self.navCtrl.view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.window addSubview:navCtrl.view];
+        self.window.rootViewController = navCtrl;
+        [self.window makeKeyAndVisible];
+    }
+    
     return YES;
 }
 
@@ -45,5 +73,39 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end
