@@ -1,0 +1,85 @@
+一、排版规范
+
+1、{}独占一行
+2、缩进使用4个空格
+3、属性可视需要关联到相关成员变量
+4、方法前需要增加注释说明，注释前与上一个方法结尾处空两行，注释后与本方法开始处空一行
+5、方法注释：
+          /*
+           描述 : 异步下载图片的回调，下载到图片后显示在指定的videoListGridViewCell上
+           输入 : 无
+           输出 : 无
+           */ 
+6、方法的每个参数都独立成行，以:对齐
+
+
+二、注释规范
+
+1、单行//
+2、多行/**/
+
+
+三、命名规范：
+
+1、.h .m文件名和@interface或@implementation一致
+2、属性用Camel式命名，如.userName
+3、成员变量用Pascal式命名，如 NSInterger UserName
+4、方法参数名以Camel式命名而参数变量以_Camel式命名，如-(void)method:(NSString *)_firstParam secondParam:(NSString *)_secondParam
+5、类方法名以Pascal式命名，如+(void)ClassMethod
+6、实例方法名以Camel式命名，如-(void)classMethod
+7、类文件名、类名以Pascal式命名，如SettingView.h  @interface SettingView
+
+
+四、工程结构规范
+
+1、所有枚举统一放到一个文件里，Enum.h
+2、图片放到Supporting Files中
+3、第三方类统一放到Third，要建立实体文件夹
+4、自定义的类统一放到Common文件夹中，要建立实体文件夹
+
+
+五、控件命名规则
+
+控件类型                       缩写      示例
+UIView                        VW_       VW_Main
+UIImageView                   IV_       IV_Launch
+UIImage                       IMG_      IMG_Movie
+UIButton                      BT_       BT_Play
+UILabel                       LB_       LB_MovieName
+UIActivityIndicatorView       AI_       AI_Loading
+UITextField                   TF_       TF_Search
+UIScrollView                  SV_       SVW_Main
+UINavigationController        NC_       NC_Base
+UIBarButtonItem               BBI_      BBI_LeftBtn
+UIViewController              VC_       VC_Root
+UIColor                       UC_       UC_Green
+GridView                      GV_       GV_Movies
+TableView                     TV_       TV_Movies
+
+NSArray                       NA_       NA_Movies
+NSMutableArray                MA_       MA_Movies
+NSDictionary                  ND_       ND_Movies
+NSMutableArray                MD_       MD_Movies
+NSSet                         NS_       NS_Movies
+
+
+六、文件命名规则
+
+1、UINavigationController 以“UI描述ViewCtrl"命名，如UISettingViewCtrl
+2、UIView以"UI描述View"命名，如UISettingView
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

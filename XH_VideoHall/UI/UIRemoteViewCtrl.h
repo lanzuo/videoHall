@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-#import "applicationView.h"
+#import "UIAppView.h"
 #import "RemoteService.h"
 #import "UIBoxTableView.h"
 #import "UIBoxTableViewCell.h"
@@ -112,7 +112,7 @@
 
     UIButton                     * btn_quit;
     UIView                       * remoteCtrlWrapper;    
-    applicationView              * applicationPanel;
+    UIAppView                    * applicationPanel;
     UITableView                  * devicesTblView;    
     RemoteService                * rs;
     UILabel                      * waitLabel ;

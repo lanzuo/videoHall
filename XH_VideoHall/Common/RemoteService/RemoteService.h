@@ -29,8 +29,6 @@ enum remoteStatus {
     NSMutableArray    * RemoteBoxIPList;  //扫描到的盒子的IP地址数组
     AsyncSocket       * TCPSocket;
     GCDAsyncUdpSocket * UDPSocket;
-    //bool                IsScanning ;
-    //BOOL                ConnectOK;
     enum remoteStatus   Status;
     NSInteger           UDPPort;
     NSInteger           TCPPort;
@@ -39,12 +37,7 @@ enum remoteStatus {
 
 @property (nonatomic,retain) NSString          * remoteBoxIP;
 @property (nonatomic,retain) NSMutableArray    * remoteBoxIPList;
-//@property (nonatomic,assign) int               udpPort;
-//@property (nonatomic,assign) int               tcpPort;
-//@property (nonatomic,assign) BOOL                connectOK;
-@property (nonatomic,assign) enum remoteStatus   status; // unconnected:0 ,host-count-0 or scanning : 1  ,connected : 2 ,connectting:3 
-
-
+@property (nonatomic,assign) enum remoteStatus   status; 
 
 -(void) scanWithUDP;
 -(void) connectWithTCP;

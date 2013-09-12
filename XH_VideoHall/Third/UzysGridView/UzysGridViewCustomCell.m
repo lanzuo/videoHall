@@ -31,7 +31,7 @@
         self.textLabel.center = self.center;
 
         [self addSubview:self.textLabel];
-        [self bringSubviewToFront:self.ButtonDelete];
+        //[self bringSubviewToFront:self.ButtonDelete];
     }
     return self;
 }
@@ -58,9 +58,9 @@
 
 - (void)dealloc
 {
-    //[textLabel release];
-    //[backgroundView release];
-    //[super dealloc];
+    [textLabel release];
+    [backgroundView release];
+    [super dealloc];
 }
 
 @end

@@ -3,9 +3,9 @@
 
 @interface UIBoxTableViewCell : UIView
 {
-    UILabel * IPAddress;
+    UILabel     * IPAddress;
     UIImageView * Accessor;
-    UIButton * Btn;
+    UIButton    * Btn;
 }
 
 @property(nonatomic,retain) UILabel * ipAddress;

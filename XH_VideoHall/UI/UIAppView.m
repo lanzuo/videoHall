@@ -1,7 +1,7 @@
-#import "applicationView.h"
+#import "UIAppView.h"
 
 
-@implementation applicationView
+@implementation UIAppView
 
 -(id)initWithFrame:(CGRect)frame{
 

@@ -1,16 +1,16 @@
-
 #import "VHAppDelegate.h"
-#import "RootViewCtrl.h"
+#import "UIRootViewCtrl.h"
+#import "UILaunchViewCtrl.h"
+#import "UILaunchView.h"
 
 @implementation VHAppDelegate
 
 @synthesize window;
-
-@synthesize serviceConfig = ServiceConfig;
+@synthesize appConfig = ND_Config;
 
 +(VHAppDelegate *)App
 {
-    return  (VHAppDelegate *)[[UIApplication sharedApplication]delegate];
+    return (VHAppDelegate *)[[UIApplication sharedApplication]delegate];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -19,7 +19,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [application setStatusBarHidden:YES];
 
-    ServiceConfig = [[NSDictionary alloc]initWithObjectsAndKeys:
+    ND_Config = [[NSDictionary alloc]initWithObjectsAndKeys:
     @"http://tvepg.bbtv.cn/tv/OttService/QueryPosition?Code=POSITION_BESTV_ONLINE_1",  @"ConfigVideoListAddress",
                                 @"http://tvepg.bbtv.cn/tv/OttService/SearchPrograms",  @"ConfigSearchPostAddress",
                                                              @"http://tvpic.bbtv.cn",  @"ConfigImgAddress",
@@ -28,20 +28,33 @@
     
     //checkNetWork
     NSURL * url = [NSURL URLWithString:@"http://www.baidu.com"];
-    NSURLRequest * request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:10];
+    NSURLRequest * request = [NSURLRequest requestWithURL:url
+                                              cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                          timeoutInterval:10];
     NSHTTPURLResponse * response;
     [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
-    
-    if (response == nil) {
+    if (response == nil)
+    {
         NSLog(@"没有网络");
-    }else{
+        UILaunchView * Launch = [[UILaunchView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
+        [self.window addSubview:Launch];
+    }
+    else
+    {
         NSLog(@"网络正常");
-        RootViewCtrl  * RootVCtrl = [[RootViewCtrl alloc]init];
-        UINavigationController * navCtrl = [[UINavigationController alloc]initWithRootViewController:RootVCtrl];
-        self.navCtrl.view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        /*RootViewCtrl  * RootVCtrl = [[RootViewCtrl alloc]init];
+        UINavigationController * navCtrl = [[UINavigationController alloc]initWithRootViewController:RootVCtrl];*/
+        UILaunchViewCtrl  * LaunchVCtrl = [[UILaunchViewCtrl alloc]init];
+        UINavigationController * navCtrl = [[UINavigationController alloc]initWithRootViewController:LaunchVCtrl];
+        navCtrl.view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.window addSubview:navCtrl.view];
         self.window.rootViewController = navCtrl;
+        
+        //LaunchView * Launch = [[LaunchView alloc]initWithFrame:CGRectMake(0, 0, 320, 480)];
+        //[self.window addSubview:Launch];
+
         [self.window makeKeyAndVisible];
+        
     }
     
     return YES;

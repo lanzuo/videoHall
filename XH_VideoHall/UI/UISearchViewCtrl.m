@@ -75,7 +75,7 @@
     NSString * keyWord = searchInput.text;
     keyWord = [keyWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     if (![keyWord isEqualToString:@""]) { 
-        NSString * searchPostAddress = [[VHAppDelegate App].serviceConfig objectForKey:@"ConfigSearchPostAddress"];
+        NSString * searchPostAddress = [[VHAppDelegate App].appConfig objectForKey:@"ConfigSearchPostAddress"];
         ASIHTTPRequest * asiRequest = [[ASIHTTPRequest alloc]initWithURL:[NSURL URLWithString:searchPostAddress]];
         NSString * postStr = [NSString stringWithFormat:@"UserGroup=%@&Keywords=%@&SearchMethod=%@&SearchType=%@&PageIndex=%@&PageSize=%d",@"OTT_GROUP$TerOut_6580$test",keyWord,@"111111111111",@"1111111111111111",@"1",20];
         NSData * postData = [postStr dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -91,10 +91,10 @@
     [searchInput resignFirstResponder];
     
     {
-        UIActivityIndicatorView * act = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(150, 170, 20, 20)];
-        [act setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
-        [act startAnimating];
-        [contentScrollView addSubview:act];
+        UIActivityIndicatorView * AI_Loading = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(150, 170, 20, 20)];
+        [AI_Loading setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+        [AI_Loading startAnimating];
+        [contentScrollView addSubview:AI_Loading];
     }
     
     return YES;

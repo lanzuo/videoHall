@@ -1,7 +1,7 @@
 #import<UIKit/UIKit.h>
 #import "XHGridView.h"
 
-@interface applicationView : UIView<XHGridViewDelegate>
+@interface UIAppView : UIView<XHGridViewDelegate>
 
 {
 

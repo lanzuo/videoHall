@@ -9,10 +9,7 @@
 #define _TCPPort_ 7002
 
 @implementation RemoteService
-//@synthesize tcpPort;
-//@synthesize udpPort;
 @synthesize remoteBoxIP     = RemoteBoxIP;
-//@synthesize connectOK       = ConnectOK;
 @synthesize remoteBoxIPList = RemoteBoxIPList;
 @synthesize status          = Status;
 
@@ -25,15 +22,10 @@ NSString *const UDP_REQ_OK			= @"amlogic-client-request-ok";
 NSString *const UDP_NO_CONNECT		= @"amlogic-client-no-connect";
 NSString *const UDP_SERVER_LISTEN 	= @"amlogic-server-listen";
 
-
-
-
 static RemoteService * sharedInstance = nil;
 
 - (id)init
 {
-    //IsScanning = false;
-
     Status = unconnected;
     RemoteBoxIPList = [[NSMutableArray alloc]init];
         
@@ -91,7 +83,8 @@ static RemoteService * sharedInstance = nil;
                                                   [arrIP objectAtIndex:2]];
     
     NSData * data = [[UDP_CLIENT_SCAN dataUsingEncoding:NSUTF8StringEncoding] copy];
-    for (int i = 2; i <= 255; i++) {
+    for (int i = 2; i <= 255; i++)
+    {
         NSString * ip = [NSString stringWithFormat:@"%@.%d",ipPre,i];
         [UDPSocket sendData:data toHost:ip port:_UDPPort_ withTimeout:1 tag:0];
         usleep(10000);
@@ -110,7 +103,8 @@ static RemoteService * sharedInstance = nil;
  输入 : 无
  输出 : 无
  */
--(void)scanTimeOutHandle:(NSTimer * )timer {
+-(void)scanTimeOutHandle:(NSTimer * )timer
+{
     NSString * boxCount = [NSString stringWithFormat:@"%d",[RemoteBoxIPList count]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"scanBoxCompletion" object:boxCount];
 }
@@ -121,13 +115,17 @@ static RemoteService * sharedInstance = nil;
  输入 : 无
  输出 : 无
  */
--(void) connectWithTCP {
+-(void) connectWithTCP
+{
     
-    if (Status != connected) {
-        if ([RemoteBoxIP intValue] == 0) { //如果IP为空
-            //Status = unconnected;
+    if (Status != connected)
+    {
+        if ([RemoteBoxIP intValue] == 0) //如果IP为空
+        {
             [self scanWithUDP];
-        }else{
+        }
+        else
+        {
             Status = connecting;
             TCPSocket = [[AsyncSocket alloc]initWithDelegate:self];
             NSError * err;
@@ -169,9 +167,8 @@ static RemoteService * sharedInstance = nil;
  */
 -(void)connectWithUDP
 {
-    //IsScanning = false;
-    //NSString * ip = [VHAppDelegate App].boxDeviceIP;
-    if ([RemoteBoxIP intValue] != 0) { //如果IP不为空
+    if ([RemoteBoxIP intValue] != 0)//如果IP不为空
+    { 
         NSData *data = [[UDP_REQUEST_CONNECT dataUsingEncoding:NSUTF8StringEncoding] copy];
         [UDPSocket sendData:data toHost:RemoteBoxIP port:_UDPPort_ withTimeout:1 tag:0];
     }
@@ -185,8 +182,8 @@ static RemoteService * sharedInstance = nil;
  */
 -(void) connectWithUDP:(NSString *)host
 {
-    //IsScanning = false;
-    if ([host intValue] != 0) { //如果IP不为空
+    if ([host intValue] != 0)//如果IP不为空
+    { 
         NSData *data = [[UDP_REQUEST_CONNECT dataUsingEncoding:NSUTF8StringEncoding] copy];
         [UDPSocket sendData:data toHost:host port:_UDPPort_ withTimeout:1 tag:0];
     }
@@ -199,10 +196,9 @@ static RemoteService * sharedInstance = nil;
  输入 : GCDAsyncUdpSocket实例，错误信息
  输出 : 无
  */
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotConnect:(NSError *)error{
-    
+- (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotConnect:(NSError *)error
+{
     NSLog(@"udpSocket connect error: %@", error);
-
 }
 
 /*
@@ -210,8 +206,8 @@ static RemoteService * sharedInstance = nil;
  输入 : GCDAsyncUdpSocket实例，连接的IP地址
  输出 : 无
  */
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didConnectToAddress:(NSData *)address{
-
+- (void)udpSocket:(GCDAsyncUdpSocket *)sock didConnectToAddress:(NSData *)address
+{
     NSString *msg = [[NSString alloc] initWithData:address encoding:NSUTF8StringEncoding];
     NSLog(@"connect ip address is :%@",msg);
 }
@@ -221,7 +217,10 @@ static RemoteService * sharedInstance = nil;
  输入 : GCDAsyncUdpSocket实例，盒子返回的数据，盒子的IP地址,filterContext
  输出 : 无
  */
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data fromAddress:(NSData *)address withFilterContext:(id)filterContext
+- (void)udpSocket:(GCDAsyncUdpSocket *)sock
+   didReceiveData:(NSData *)data
+      fromAddress:(NSData *)address
+withFilterContext:(id)filterContext
 {    
     Byte * byteArr = (Byte*)[address bytes];
     NSString *  ip = [[NSString alloc] initWithFormat:@"%d.%d.%d.%d",
@@ -253,12 +252,16 @@ static RemoteService * sharedInstance = nil;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"ifScanOneBox" object:oneClient];        
         //}
         
-    }else{
+    }
+    else
+    {
         NSString *msg = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        if([UDP_REQ_CONFIRM caseInsensitiveCompare:msg] == NSOrderedSame){
+        if([UDP_REQ_CONFIRM caseInsensitiveCompare:msg] == NSOrderedSame)
+        {
             NSData *data = [[UDP_REQ_OK dataUsingEncoding:NSUTF8StringEncoding] copy];
             [UDPSocket sendData:data toHost:ip port:_UDPPort_ withTimeout:1 tag:0];
-        }else if([UDP_SERVER_LISTEN caseInsensitiveCompare:msg] == NSOrderedSame)
+        }
+        else if([UDP_SERVER_LISTEN caseInsensitiveCompare:msg] == NSOrderedSame)
         {
             [RemoteService ModifyBoxIP:ip shouldUpdateUITextField:YES];
 
@@ -277,7 +280,6 @@ static RemoteService * sharedInstance = nil;
  */
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port
 {
-    //ConnectOK = YES;
     Status = connected;
     [RemoteService ModifyBoxIP:host shouldUpdateUITextField:YES];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"getTcpState" object:nil];
@@ -297,7 +299,6 @@ static RemoteService * sharedInstance = nil;
  */
 - (void)onSocketDidDisconnect:(AsyncSocket *)sock {
     NSLog(@"disconnect");
-    //ConnectOK = NO;
     Status = unconnected;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"getTcpState" object:nil];
     [TCPSocket release];
@@ -314,7 +315,7 @@ static RemoteService * sharedInstance = nil;
 
 - (void)dealloc
 {
-    //[tcpSocket release];
+    //[TCPSocket release];
     [super dealloc];
 }
 
@@ -354,10 +355,9 @@ static RemoteService * sharedInstance = nil;
  输入 : 节目的Uri
  输出 : 无
  */
--(void) sendPlayValue:(NSString * )playUri {
-    NSLog(@"%s,%d",__FUNCTION__,__LINE__);
+-(void) sendPlayValue:(NSString * )playUri
+{
     NSString * epiUri = [NSString stringWithFormat:@"URI=%@%@",playUri,@"|1:play"] ;
-    
     NSData * playData = [epiUri dataUsingEncoding: NSUTF8StringEncoding];
     Byte sendByte[[playData length]+6];
     sendByte[4] = (Byte)8;

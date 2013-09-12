@@ -1,22 +1,28 @@
-#import "RootViewCtrl.h"
+#import "UIRootViewCtrl.h"
 #import "UIRemoteViewCtrl.h"
 #import "UIDetailViewCtrl.h"
 #import "VHAppDelegate.h"
 #import "UISearchViewCtrl.h"
 
-@implementation RootViewCtrl
+@implementation UIRootViewCtrl
 
 #pragma mark 视图加载
 
 -(void)loadView{
-
     [super loadView];
+    [self loadSubView];
+}
+
+-(void)loadSubView{
+
+    
     UIView * view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
     self.view = view;
- 
+    self.navigationController.navigationBarHidden = NO;
+    
     videoListDataArr = [[NSMutableArray alloc] init];
     sliderImgArr = [[NSMutableArray alloc] init];
-  
+    
     {
         [[self.navigationController navigationBar] setFrame:CGRectMake(0, 0, 320, 60)];
         
@@ -31,7 +37,7 @@
         UIButton *_remoteCtrl = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
         [_remoteCtrl setBackgroundImage:[UIImage imageNamed:@"btn_control.png"] forState:UIControlStateNormal];
         [_remoteCtrl addTarget:self action:@selector(btnRemoteCtrlClick) forControlEvents:UIControlEventTouchDown];
-        UIBarButtonItem *btnRemoteCtrl = [[UIBarButtonItem alloc] initWithCustomView:_remoteCtrl];        
+        UIBarButtonItem *btnRemoteCtrl = [[UIBarButtonItem alloc] initWithCustomView:_remoteCtrl];
         self.navigationItem.rightBarButtonItem = btnRemoteCtrl;
         
         //没法对self.title的字体进行设置，所以对titleView自定义，设置方正兰亭超细黑为字体样式
@@ -47,7 +53,7 @@
         //将文字垂直位置上调使之垂直居中
         [[self.navigationController navigationBar] setTitleVerticalPositionAdjustment:-8 forBarMetrics:UIBarMetricsDefault];
     }
-  
+    
     
     {
         //把搜索区域、推荐大图区域、列表区域都装载到scrollView里
@@ -58,9 +64,12 @@
     }
     
     {
-        settingView = [[SettingView alloc]initWithFrame:CGRectMake(-250, -44, 250, 480)];          // 导航栏高度为44，Y坐标值起点以导航栏以下为参考点
+        settingView = [[UISettingView alloc]initWithFrame:CGRectMake(-250, -44, 250, 480)];          // 导航栏高度为44，Y坐标值起点以导航栏以下为参考点
         [self.view addSubview:settingView];
     }
+    
+    ctrlLoading = [[UIViewCtrlLoading alloc]initWithFrame:CGRectMake(120, 200, 80, 80)];
+    [self.view addSubview:ctrlLoading];
     
 }
 
@@ -95,11 +104,13 @@
     //load list video
     {
 
-        NSString * videoListAddress = [[VHAppDelegate App].serviceConfig objectForKey:@"ConfigVideoListAddress"];
+        NSString * videoListAddress = [[VHAppDelegate App].appConfig objectForKey:@"ConfigVideoListAddress"];
         asiRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:videoListAddress]];
         [asiRequest startSynchronous];
         NSError * error;       
-        NSDictionary * videoList = [NSJSONSerialization JSONObjectWithData:[asiRequest responseData] options:kNilOptions error:&error];
+        NSDictionary * videoList = [NSJSONSerialization JSONObjectWithData:[asiRequest responseData]
+                                                                   options:kNilOptions
+                                                                     error:&error];
         videoListDataArr = [[[[videoList objectForKey:@"Response"]
                                          objectForKey:@"Body"]
                                          objectForKey:@"Position"]
@@ -119,7 +130,7 @@
             asiQueue = [[ASINetworkQueue alloc]init];
             int i = 0;
             for (NSDictionary * item in videoListDataArr) {
-                NSString * imgUrl = [NSString stringWithFormat:@"%@%@",[[VHAppDelegate App].serviceConfig objectForKey:@"ConfigImgAddress"],[item objectForKey:@"BigImageUrl"] ];                
+                NSString * imgUrl = [NSString stringWithFormat:@"%@%@",[[VHAppDelegate App].appConfig objectForKey:@"ConfigImgAddress"],[item objectForKey:@"BigImageUrl"] ];
                 ASIHTTPRequest * imgRequest = [[ASIHTTPRequest alloc]initWithURL:[NSURL URLWithString:imgUrl]];
                 imgRequest.delegate = self;
                 
@@ -307,10 +318,22 @@ static int sliderIndex = 0;
  输出 : 无
  */
 -(void)btnRemoteCtrlClick {
+    
     [self.view addSubview:ctrlLoading];
+    [NSTimer scheduledTimerWithTimeInterval: 3.0
+                                     target: self
+                                   selector: @selector(pushToRemoteCtrl:)
+                                   userInfo: nil
+                                    repeats: NO];
+
+}
+
+-(void)pushToRemoteCtrl:(NSTimer * )timer {
     UIRemoteViewCtrl * remoteViewCtrl = [[UIRemoteViewCtrl alloc]init];
     [self.navigationController pushViewController:remoteViewCtrl animated:YES];
+
 }
+
 
 /*
  描述 : 响应导航栏左侧菜单按钮点击事件，显示或隐藏菜单界面
@@ -359,18 +382,19 @@ static int sliderIndex = 0;
 
 -(void)viewDidLoad{
     [super viewDidLoad];
-    ctrlLoading = [[UIViewCtrlLoading alloc]initWithFrame:CGRectMake(120, 200, 80, 80)];
-    [self.view addSubview:ctrlLoading];
+    NSLog(@"rootViewCtrl frame : %@ ",NSStringFromCGRect(self.view.frame));
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [ctrlLoading removeFromSuperview];
+    [ctrlLoading removeFromSuperview]; 
 }
+
+
 
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-  
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

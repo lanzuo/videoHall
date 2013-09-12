@@ -148,7 +148,7 @@
     
     // add applicationView
     {
-        applicationPanel = [[applicationView alloc]initWithFrame:CGRectMake(0, 480, 320, 480)];
+        applicationPanel = [[UIAppView alloc]initWithFrame:CGRectMake(0, 480, 320, 480)];
         [self.view addSubview:applicationPanel];
         
     }

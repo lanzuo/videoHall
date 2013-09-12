@@ -1,7 +1,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIDetailViewCtrl.h"
 #import "VHAppDelegate.h"
-#import "RootViewCtrl.h"
+#import "UIRootViewCtrl.h"
 #import "UIRemoteViewCtrl.h"
 #import "ASIHTTPRequest.h"
 
@@ -11,7 +11,8 @@
 
 @synthesize videoID,videoTitle,videoPost,videoInstr,videoPlayUri;
 
-+(id)initWithVideo:videoName VideoImg:videoImg VideoDesc:videoDesc VideoUri:videoUri{
++(id)initWithVideo:videoName VideoImg:videoImg VideoDesc:videoDesc VideoUri:videoUri
+{
 
     UIDetailViewCtrl * detail = [[UIDetailViewCtrl alloc]init];
     detail.videoTitle = videoName;
@@ -21,13 +22,15 @@
     return  detail;
 }
 
--(void)loadView{
+-(void)loadView
+{
     [super loadView];
     UIView * view = [[UIView alloc]initWithFrame:[[UIScreen mainScreen] applicationFrame]];
     self.view = view;
 }
 
--(void)viewDidLoad{
+-(void)viewDidLoad
+{
     
     [super viewDidLoad];
     UILabel * ttView = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 60)];
@@ -45,10 +48,9 @@
     [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchDown];
     UIBarButtonItem * backBtnItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = backBtnItem;
-    
-    
+        
     VideoPost = [[UIImageView alloc]initWithFrame:CGRectMake(0, 14, 320, 187)];
-    NSString * imgUrl = [NSString stringWithFormat:@"%@%@",[[VHAppDelegate App].serviceConfig objectForKey:@"ConfigImgAddress"],self.videoPost];
+    NSString * imgUrl = [NSString stringWithFormat:@"%@%@",[[VHAppDelegate App].appConfig objectForKey:@"ConfigImgAddress"],self.videoPost];
     ASIHTTPRequest * imgRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imgUrl]];
     [imgRequest setDelegate:self];
     [imgRequest startAsynchronous];
@@ -58,16 +60,13 @@
     [Indic setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
     [Indic startAnimating];
     [self.view addSubview:Indic];
-    
-    
+        
     VideoTitle = [[UILabel alloc]initWithFrame:CGRectMake(15, 201, 290, 80)];
     VideoTitle.backgroundColor = [UIColor clearColor];
     VideoTitle.textColor = [UIColor blackColor];
     VideoTitle.text = self.videoTitle;
     VideoTitle.font = [UIFont fontWithName:@"FZLTCXHJW--GB1-0" size:32];
     [self.view addSubview:VideoTitle];
-    
-    
     
     VideoMeta = [[UILabel alloc]initWithFrame:CGRectMake(15, 261, 290, 80)];
     VideoMeta.backgroundColor = [UIColor clearColor];
@@ -89,24 +88,25 @@
     [VideoBtnPlay addTarget:self action:@selector(playBtnClick) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:VideoBtnPlay];
     
-    CtrlLoading = [[UIViewCtrlLoading alloc]initWithFrame:CGRectMake(120, 280, 80, 80)];
+    CtrlLoading = [[UIViewCtrlLoading alloc]initWithFrame:CGRectMake(120, 200, 80, 80)];
     [self.view addSubview:CtrlLoading];
     
-    
-
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated
+{
     
     [super viewWillAppear:animated];
     [CtrlLoading removeFromSuperview];
 }
 
--(void)backBtnClick{
+-(void)backBtnClick
+{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)playBtnClick {
+-(void)playBtnClick
+{
     [self.view addSubview:CtrlLoading];
     [NSTimer scheduledTimerWithTimeInterval: 3.0
                                      target: self
@@ -118,13 +118,17 @@
 }
 
 
--(void)pushToRemoteCtrl:(NSTimer * )timer {
+-(void)pushToRemoteCtrl:(NSTimer * )timer
+{
     UIRemoteViewCtrl * remoteViewCtrl = [[UIRemoteViewCtrl alloc]init];
     RemoteService * rs = [RemoteService sharedInstance];
     
-    if (rs.status == connected) {
+    if (rs.status == connected)
+    {
         [rs sendPlayValue:self.videoPlayUri];
-    }else{
+    }
+    else
+    {
         remoteViewCtrl.playUrl = self.videoPlayUri;
     }
     
@@ -134,10 +138,11 @@
 
 
 
-- (void)requestFinished:(ASIHTTPRequest *) request {
+- (void)requestFinished:(ASIHTTPRequest *) request
+{
 
-    UIImage * img = [UIImage imageWithData:[request responseData]];
-    VideoPost.image = img;
+    UIImage * IMG_Post = [UIImage imageWithData:[request responseData]];
+    VideoPost.image = IMG_Post;
     [Indic stopAnimating];
     [Indic removeFromSuperview];
 

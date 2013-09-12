@@ -3,17 +3,14 @@
 #import "UIViewCtrlLoading.h"
 
 
-@interface UIDetailViewCtrl : UIViewController{
-
+@interface UIDetailViewCtrl : UIViewController
+{
     UIImageView             * VideoPost;
     UILabel                 * VideoTitle;
     UILabel                 * VideoMeta;    
     UIButton                * VideoBtnPlay;
     UIActivityIndicatorView * Indic;
     UIViewCtrlLoading       * CtrlLoading;
-    
-    
-    //AsyncSocket * tcpSocket;
 
 }
 
