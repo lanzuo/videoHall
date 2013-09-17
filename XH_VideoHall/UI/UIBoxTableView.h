@@ -14,7 +14,7 @@
 @interface UIBoxTableView : UIView
 {
     
-    UIScrollView * boxScrollView;
+    UIScrollView   * boxScrollView;
     NSMutableArray * boxList;
     
 }

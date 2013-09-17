@@ -157,8 +157,8 @@
 {
     XHGridViewCell * cell     = [[XHGridViewCell alloc]initWithFrame:CGRectMake(0, 0, 60, 90)];
     
-    UIView * VW_Disney           = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 60, 90)];
-    VW_Disney.backgroundColor    = [UIColor clearColor];
+    UIView * VW_Disney        = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 60, 90)];
+    VW_Disney.backgroundColor = [UIColor clearColor];
     
     UIImageView * IV_Disney   = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
     IV_Disney.image           = [UIImage imageNamed:@"icon_disney.png"];

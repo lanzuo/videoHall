@@ -53,12 +53,11 @@
         //将文字垂直位置上调使之垂直居中
         [[self.navigationController navigationBar] setTitleVerticalPositionAdjustment:-8 forBarMetrics:UIBarMetricsDefault];
     }
-    
-    
+
     {
         //把搜索区域、推荐大图区域、列表区域都装载到scrollView里
         contentScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 16, 320, 480-60)];    // 16 = 60 - 44
-        [contentScrollView setContentSize:CGSizeMake(320, 49 + 187 + 40 * 145+15)];                // TODO : 高度通过计算得出，不能写死
+        //[contentScrollView setContentSize:CGSizeMake(320, 49 + 187 + 40 * 145+15)];                // TODO : 高度通过计算得出，不能写死
         [self.view addSubview:contentScrollView];
         [self loadContentScrollView];
     }
@@ -121,10 +120,17 @@
         
         [self loadSliderImg];
         
-        videoListGridView = [[UzysGridView alloc] initWithFrame:CGRectMake(0, 49+187, 320, 40 * 145 + 10) numOfRow:3 numOfColumns:3 cellMargin:15];
+        int lineCount = ([videoListDataArr count] % 3 == 0) ? ([videoListDataArr count] / 3 ): ([videoListDataArr count] / 3 + 1);
+        
+        videoListGridView = [[UzysGridView alloc] initWithFrame:CGRectMake(0, 49+187, 320, 145 * lineCount + 10)
+                                                       numOfRow:3
+                                                   numOfColumns:3
+                                                     cellMargin:15];
         videoListGridView.delegate = self;
         videoListGridView.dataSource = self;
         [contentScrollView addSubview:videoListGridView];
+        
+        [contentScrollView setContentSize:CGSizeMake(320, 49 + 187 + videoListGridView.frame.size.height)];
         //下载图片
         {
             asiQueue = [[ASINetworkQueue alloc]init];

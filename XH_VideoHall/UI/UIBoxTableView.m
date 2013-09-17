@@ -40,7 +40,6 @@
     [boxCell addSubview:boxCell.btn];
     
     [boxScrollView addSubview:boxCell];
-
 }
 
 -(void)cellBtnClick:(id)sender{

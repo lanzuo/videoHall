@@ -33,24 +33,25 @@
 {
     
     [super viewDidLoad];
-    UILabel * ttView = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 60)];
-    ttView.backgroundColor = [UIColor clearColor];
-    ttView.textAlignment   = UITextAlignmentCenter;
-    ttView.textColor       = [UIColor whiteColor];
-    ttView.font            = [UIFont fontWithName:@"FZLTCXHJW--GB1-0" size:23];
-    ttView.text            = @"节目详情";
-    self.navigationItem.titleView = ttView;
+    UILabel * LB_ttView       = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 160, 60)];
+    LB_ttView.backgroundColor = [UIColor clearColor];
+    LB_ttView.textAlignment   = UITextAlignmentCenter;
+    LB_ttView.textColor       = [UIColor whiteColor];
+    LB_ttView.font            = [UIFont fontWithName:@"FZLTCXHJW--GB1-0" size:23];
+    LB_ttView.text            = @"节目详情";
+    self.navigationItem.titleView = LB_ttView;
 
-    UIButton * backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
-    UIImageView * backBtnImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, -10, 60, 60)];
-    backBtnImg.image = [UIImage imageNamed:@"btn-back.png"];
-    [backBtn addSubview:backBtnImg];
-    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchDown];
-    UIBarButtonItem * backBtnItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    self.navigationItem.leftBarButtonItem = backBtnItem;
+    UIButton * Btn_leftBtn   = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
+    UIImageView * IV_leftBtn = [[UIImageView alloc]initWithFrame:CGRectMake(0, -10, 60, 60)];
+    IV_leftBtn.image         = [UIImage imageNamed:@"btn-back.png"];
+    [Btn_leftBtn addSubview:IV_leftBtn];
+    [Btn_leftBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchDown];
+    UIBarButtonItem * BBI_LeftBtn = [[UIBarButtonItem alloc] initWithCustomView:Btn_leftBtn];
+    self.navigationItem.leftBarButtonItem = BBI_LeftBtn;
         
     VideoPost = [[UIImageView alloc]initWithFrame:CGRectMake(0, 14, 320, 187)];
     NSString * imgUrl = [NSString stringWithFormat:@"%@%@",[[VHAppDelegate App].appConfig objectForKey:@"ConfigImgAddress"],self.videoPost];
+    NSLog(@"imgurl : %@",imgUrl);
     ASIHTTPRequest * imgRequest = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:imgUrl]];
     [imgRequest setDelegate:self];
     [imgRequest startAsynchronous];
@@ -81,6 +82,7 @@
     btn_play_label.font = [UIFont fontWithName:@"FZLTCXHJW--GB1-0" size:23];
     btn_play_label.textColor = [UIColor whiteColor];
     btn_play_label.textAlignment = UITextAlignmentCenter;
+    //btn_play_label.textAlignment = kCTCenterTextAlignment;
     btn_play_label.backgroundColor = [UIColor colorWithRed:271/255 green:77/255 blue:33/255 alpha:1];
     btn_play_label.text = @"播放";
     btn_play_label.userInteractionEnabled = NO;
