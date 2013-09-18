@@ -57,7 +57,6 @@
     {
         //把搜索区域、推荐大图区域、列表区域都装载到scrollView里
         contentScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 16, 320, 480-60)];    // 16 = 60 - 44
-        //[contentScrollView setContentSize:CGSizeMake(320, 49 + 187 + 40 * 145+15)];                // TODO : 高度通过计算得出，不能写死
         [self.view addSubview:contentScrollView];
         [self loadContentScrollView];
     }
@@ -65,6 +64,8 @@
     {
         settingView = [[UISettingView alloc]initWithFrame:CGRectMake(-250, -44, 250, 480)];          // 导航栏高度为44，Y坐标值起点以导航栏以下为参考点
         [self.view addSubview:settingView];
+        
+        
     }
     
     ctrlLoading = [[UIViewCtrlLoading alloc]initWithFrame:CGRectMake(120, 200, 80, 80)];
@@ -353,16 +354,20 @@ static int sliderIndex = 0;
             [self.navigationController navigationBar].frame = CGRectMake(250, 0, 320, 60);
             contentScrollView.frame = CGRectMake(250, 16, 320, 420);
                   settingView.frame = CGRectMake(0, -44, 250, 480);
+            
                settingView.isHidden = NO;          
         } completion:nil];
+        
     }else{   
         [UIView animateWithDuration:0.3 animations:^(void){
             [self.navigationController navigationBar].frame = CGRectMake(0, 0, 320, 60);
             contentScrollView.frame = CGRectMake(0, 16, 320, 420);
                   settingView.frame = CGRectMake(-250, -44, 250, 480);
+            
                settingView.isHidden = YES;           
         } completion:nil];
         [settingView saveIPAddress];    //保存IP地址
+        
     }
 
 }
@@ -392,9 +397,10 @@ static int sliderIndex = 0;
     
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
-    [ctrlLoading removeFromSuperview]; 
+    [ctrlLoading removeFromSuperview];
 }
 
 

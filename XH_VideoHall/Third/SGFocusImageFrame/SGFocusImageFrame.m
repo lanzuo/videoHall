@@ -136,7 +136,7 @@ static CGFloat SWITCH_FOCUS_PICTURE_INTERVAL = 3.0; //switch interval time
         lbltitle.backgroundColor = [UIColor clearColor];
         [_sliderImages addObject:imageView];
         [_scrollView addSubview:imageView];
-        [_scrollView addSubview:lbltitle];
+        //[_scrollView addSubview:lbltitle];
         //[lbltitle release];
     }
     //[tapGestureRecognize release];

@@ -32,6 +32,7 @@
     ASIHTTPRequest       * asiRequest;
     ASINetworkQueue      * asiQueue;
     UIViewCtrlLoading    * ctrlLoading;         //切换到RemoteViewCtrl时用
+   
 
   
 }
